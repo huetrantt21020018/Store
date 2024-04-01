@@ -24,18 +24,26 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDTO> getAllOrder() {
         //return (List<Order>) orderRepository.findAll();
         List<Order> orders = (List<Order>) orderRepository.findAll();
-        List<OrderDTO> dtos = new ArrayList<OrderDTO>();
+        List<OrderDTO> dtos = new ArrayList<>();
         for(Order order: orders) {
-            dtos.add(new OrderDTO(order, productRepository.findById(order.getPid()).get()));
+            try {
+                Product product = productRepository.findById(order.getPid()).get();
+                dtos.add(new OrderDTO(order, product));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return dtos;
     }
 
     @Override
     public void saveOrder(OrderDTO dto) {
-        Order order = new Order(dto);
-        System.out.println(order);
-        orderRepository.save(order);
+        try {
+            Product product = productRepository.findById(dto.getPid()).get();
+            orderRepository.save(new Order(dto));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

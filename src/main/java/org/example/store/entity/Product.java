@@ -22,7 +22,6 @@ public class Product {
 
     public Product() {}
     public Product(ProductDTO product) {
-        this.pid = product.getPid();
         this.name = product.getName();
         this.price = product.getPrice();
         this.description = product.getDescription();
