@@ -1,6 +1,8 @@
 package org.example.store.entity;
 
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
+import org.example.store.dto.OrderDTO;
 
 @Entity
 @Table(name = "order_details")
@@ -17,6 +19,11 @@ public class Order {
         this.count = count;
     }
 
+    public Order(OrderDTO dto) {
+        this.pid = dto.getPid();
+        this.count = dto.getCount();
+    }
+
     public void setPid(Long pid) {
         this.pid = pid;
     }
@@ -31,5 +38,13 @@ public class Order {
 
     public int getCount() {
         return count;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "pid=" + pid +
+                ", count=" + count +
+                '}';
     }
 }
